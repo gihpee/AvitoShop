@@ -1,4 +1,4 @@
-package main
+package tests
 
 import (
 	"avito-tech-internship/config"
@@ -6,14 +6,12 @@ import (
 	"avito-tech-internship/internal/middleware"
 	"avito-tech-internship/internal/repository"
 	"avito-tech-internship/internal/services"
-	"log"
 
 	"github.com/gin-gonic/gin"
 )
 
-func main() {
+func setupServer() *gin.Engine {
 	cfg := config.LoadConfig()
-
 	db := repository.InitDB(cfg)
 
 	userRepo := repository.NewUserRepo(db)
@@ -26,7 +24,6 @@ func main() {
 	transService := services.NewTransactionService(userRepo, transRepo)
 
 	router := gin.Default()
-
 	handlers.RegisterAuthRoutes(router, authService)
 
 	authGroup := router.Group("/api")
@@ -36,6 +33,5 @@ func main() {
 	handlers.RegisterTransactionRoutes(authGroup, transService)
 	handlers.RegisterMerchRoutes(authGroup, merchService)
 
-	log.Println("Server running on port 8080")
-	router.Run(":8080")
+	return router
 }

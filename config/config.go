@@ -26,9 +26,9 @@ func LoadConfig() *Config {
 		DBHost:     getEnv("DB_HOST", "localhost"),
 		DBPort:     getEnv("DB_PORT", "5432"),
 		DBUser:     getEnv("DB_USER", "postgres"),
-		DBPassword: getEnv("DB_PASSWORD", "password"),
-		DBName:     getEnv("DB_NAME", "merch_store"),
-		JWTSecret:  getEnv("JWT_SECRET", "supersecret"),
+		DBPassword: getEnv("DB_PASSWORD", "rootroot"),
+		DBName:     getEnv("DB_NAME", "avito2"),
+		JWTSecret:  getEnv("JWT_SECRET", "rootroot"),
 	}
 }
 
