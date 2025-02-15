@@ -6,6 +6,11 @@ import (
 	"gorm.io/gorm"
 )
 
+type TransactionRepository interface {
+	GetTransactionsByUser(userID string) ([]models.Transaction, error)
+	CreateTransaction(transaction *models.Transaction) error
+}
+
 type TransactionRepo struct {
 	db *gorm.DB
 }

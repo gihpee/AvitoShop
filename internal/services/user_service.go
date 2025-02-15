@@ -8,12 +8,12 @@ import (
 )
 
 type UserService struct {
-	userRepo  *repository.UserRepo
-	merchRepo *repository.MerchRepo
-	transRepo *repository.TransactionRepo
+	userRepo  repository.UserRepository
+	merchRepo repository.MerchRepository
+	transRepo repository.TransactionRepository
 }
 
-func NewUserService(userRepo *repository.UserRepo, merchRepo *repository.MerchRepo, transRepo *repository.TransactionRepo) *UserService {
+func NewUserService(userRepo repository.UserRepository, merchRepo repository.MerchRepository, transRepo repository.TransactionRepository) *UserService {
 	return &UserService{userRepo: userRepo, merchRepo: merchRepo, transRepo: transRepo}
 }
 
@@ -25,7 +25,7 @@ func (s *UserService) CreateUser(username, password string) (*models.User, error
 	user := &models.User{
 		ID:       uuid.New(),
 		Username: username,
-		Password: password, //todo: хеширование
+		Password: password,
 		Coins:    1000,
 	}
 

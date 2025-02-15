@@ -10,12 +10,12 @@ import (
 )
 
 type MerchService struct {
-	merchRepo *repository.MerchRepo
-	userRepo  *repository.UserRepo
-	transRepo *repository.TransactionRepo
+	merchRepo repository.MerchRepository
+	userRepo  repository.UserRepository
+	transRepo repository.TransactionRepository
 }
 
-func NewMerchService(merchRepo *repository.MerchRepo, userRepo *repository.UserRepo, transRepo *repository.TransactionRepo) *MerchService {
+func NewMerchService(merchRepo repository.MerchRepository, userRepo repository.UserRepository, transRepo repository.TransactionRepository) *MerchService {
 	return &MerchService{merchRepo: merchRepo, userRepo: userRepo, transRepo: transRepo}
 }
 
