@@ -34,6 +34,10 @@ func (s *TransactionService) SendCoins(fromUserID, toUsername string, amount int
 		return err
 	}
 
+	if fromUser.ID == toUser.ID {
+		return errors.New("cannot send coins to yourself")
+	}
+
 	if fromUser.Coins < amount {
 		return errors.New("not enough coins")
 	}
