@@ -13,7 +13,7 @@ Golang, PostgreSQL, GORM, Redis
    - Авторизация одного пользователя (Number of Threads: 500, Loop Count: 100)<br>**Результаты:** Error%: 0.00%; Avg: 296; RPS: 1629 ![image](https://github.com/user-attachments/assets/c53d4b72-51b6-4752-ae86-7a2a5c2127b2)
    - Запрос на api/info одного пользователя (Number of Threads: 500, Loop Count: 100)<br>**Результаты:** Error%: 0.00%; Avg: 333; RPS: 1377 ![image](https://github.com/user-attachments/assets/d187fee9-6d48-4eaa-8bea-dd5d79767ac7)
    
-   С подробными отчетами можно ознакомиться в папке `reports`
+   С подробными отчетами можно ознакомиться в папке `reports` (52% JS в репозитории это именно они)
 
 ## Оптимизация
 - Поставил Redis для кеширования пользователей и токенов — значительно улучшились показатели
