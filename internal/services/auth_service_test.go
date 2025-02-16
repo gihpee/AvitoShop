@@ -1,12 +1,14 @@
 package services
 
 import (
+	"avito-tech-internship/internal/cache"
 	"avito-tech-internship/internal/models"
 	"avito-tech-internship/internal/services/mocks"
 	"errors"
 	"testing"
 	"time"
 
+	"github.com/go-redis/redismock/v8"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
@@ -18,6 +20,9 @@ func TestAuthenticate_ExistingUser(t *testing.T) {
 	mockUserRepo := new(mocks.MockUserRepo)
 	service := NewAuthService(mockUserRepo, "rootroot")
 
+	db, mockRedis := redismock.NewClientMock()
+	cache.SetRedisClient(db)
+
 	username := "test"
 	password := "password"
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
@@ -25,6 +30,9 @@ func TestAuthenticate_ExistingUser(t *testing.T) {
 	mockUser := &models.User{ID: uuid.New(), Username: username, Password: string(hashedPassword)}
 
 	mockUserRepo.On("GetUserByUsername", username).Return(mockUser, nil)
+
+	mockRedis.ExpectGet("token:test").RedisNil()
+	mockRedis.ExpectSet("token:test", mock.Anything, time.Hour).SetVal("token")
 
 	token, err := service.Authenticate(username, password)
 

@@ -2,6 +2,7 @@ package tests
 
 import (
 	"avito-tech-internship/config"
+	"avito-tech-internship/internal/cache"
 	"avito-tech-internship/internal/handlers"
 	"avito-tech-internship/internal/middleware"
 	"avito-tech-internship/internal/repository"
@@ -13,6 +14,7 @@ import (
 func setupServer() *gin.Engine {
 	cfg := config.LoadConfig()
 	db := repository.InitDB(cfg)
+	cache.InitRedis(cfg)
 
 	userRepo := repository.NewUserRepo(db)
 	merchRepo := repository.NewMerchRepo(db)

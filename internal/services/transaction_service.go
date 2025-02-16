@@ -24,13 +24,9 @@ func (s *TransactionService) SendCoins(fromUserID, toUsername string, amount int
 		return errors.New("invalid amount")
 	}
 
-	fromUser, err := cache.GetCachedUser(fromUserID)
-	if err != nil || fromUser == nil {
-		fromUser, err := s.userRepo.GetUserByID(fromUserID)
-		if err != nil {
-			return err
-		}
-		cache.CacheUser(fromUser)
+	fromUser, err := s.userRepo.GetUserByID(fromUserID)
+	if err != nil {
+		return err
 	}
 
 	toUser, err := s.userRepo.GetUserByUsername(toUsername)

@@ -43,12 +43,12 @@ func TestBuyMerch_MerchNotFound(t *testing.T) {
 	user := &models.User{ID: uuid.MustParse(userID), Username: "test"}
 
 	mockUserRepo.On("GetUserByID", userID).Return(user, nil)
-	mockMerchRepo.On("GetMerchByName", "noname").Return(nil, errors.New("merch not found"))
+	mockMerchRepo.On("GetMerchByName", "noname").Return(nil, errors.New("item not found"))
 
 	err := service.BuyMerch(userID, "noname")
 
 	assert.Error(t, err)
-	assert.Equal(t, "merch not found", err.Error())
+	assert.Equal(t, "item not found", err.Error())
 }
 
 func TestBuyMerch_NotEnoughCoins(t *testing.T) {

@@ -31,7 +31,7 @@ func TestBuyMerch(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &authResponse)
 	token := authResponse["token"]
 
-	//сохранение начального количества монет
+	//проверка начального количества монет
 	req = httptest.NewRequest("GET", "/api/info", nil)
 	req.Header.Set("Authorization", "Bearer "+token)
 	w = httptest.NewRecorder()

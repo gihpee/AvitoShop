@@ -21,6 +21,10 @@ func InitRedis(cfg *config.Config) {
 	})
 }
 
+func SetRedisClient(mockClient *redis.Client) {
+	rdb = mockClient
+}
+
 func GetCachedUser(userID string) (*models.User, error) {
 	cached, err := rdb.Get(ctx, "user:"+userID).Result()
 	if err != nil {
