@@ -1,0 +1,40 @@
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+  gocyclo:
+    min-complexity: 10
+
+  staticcheck:
+    checks: all
+
+  ineffassign: {}
+  unused: {}
+
+linters:
+  enable:
+    - errcheck
+    - gocyclo
+    - staticcheck
+    - ineffassign
+    - unused
+    - revive
+    - unconvert
+    - unparam
+    - typecheck
+    - misspell
+    - whitespace
+    - dupl
+
+issues:
+  exclude-rules:
+    - linters:
+        - errcheck
+      text: "error return value not checked"
+
+  max-issues-per-linter: 50
+  max-same-issues: 5
+
+  new: true
+  format: tab

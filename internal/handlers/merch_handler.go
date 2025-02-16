@@ -19,6 +19,6 @@ func RegisterMerchRoutes(r *gin.RouterGroup, merchService *services.MerchService
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"message": "Item purchased successfully"})
+		c.JSON(http.StatusOK, gin.H{"message": "item purchased successfully"})
 	})
 }

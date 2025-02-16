@@ -1,6 +1,7 @@
 package services
 
 import (
+	"avito-tech-internship/internal/cache"
 	"avito-tech-internship/internal/models"
 	"avito-tech-internship/internal/repository"
 
@@ -17,8 +18,16 @@ func NewUserService(userRepo repository.UserRepository, merchRepo repository.Mer
 	return &UserService{userRepo: userRepo, merchRepo: merchRepo, transRepo: transRepo}
 }
 
-func (s *UserService) GetUserByID(id string) (*models.User, error) {
-	return s.userRepo.GetUserByID(id)
+func (s *UserService) GetUserByID(userID string) (*models.User, error) {
+	user, err := cache.GetCachedUser(userID)
+	if err != nil || user == nil {
+		user, err = s.userRepo.GetUserByID(userID)
+		if err != nil {
+			return nil, err
+		}
+		cache.CacheUser(user)
+	}
+	return user, nil
 }
 
 func (s *UserService) CreateUser(username, password string) (*models.User, error) {

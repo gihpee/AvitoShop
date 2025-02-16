@@ -18,7 +18,7 @@ func RegisterTransactionRoutes(r *gin.RouterGroup, transService *services.Transa
 		}
 
 		if err := c.BindJSON(&req); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"errors": "Invalid request"})
+			c.JSON(http.StatusBadRequest, gin.H{"errors": "invalid request"})
 			return
 		}
 
@@ -28,6 +28,6 @@ func RegisterTransactionRoutes(r *gin.RouterGroup, transService *services.Transa
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"message": "Coins sent successfully"})
+		c.JSON(http.StatusOK, gin.H{"message": "coins sent successfully"})
 	})
 }

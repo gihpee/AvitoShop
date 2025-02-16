@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 
+	"avito-tech-internship/internal/cache"
 	"avito-tech-internship/internal/models"
 	"avito-tech-internship/internal/repository"
 
@@ -22,14 +23,12 @@ func NewMerchService(merchRepo repository.MerchRepository, userRepo repository.U
 func (s *MerchService) BuyMerch(userID, merchName string) error {
 	user, err := s.userRepo.GetUserByID(userID)
 	if err != nil {
-		return err
+		return errors.New("user not found")
 	}
-
-	//todo: проверка merchName
 
 	merch, err := s.merchRepo.GetMerchByName(merchName)
 	if err != nil {
-		return err
+		return errors.New("item not found")
 	}
 
 	if user.Coins < merch.Price {
@@ -40,6 +39,8 @@ func (s *MerchService) BuyMerch(userID, merchName string) error {
 	err = s.userRepo.UpdateUser(user)
 	if err != nil {
 		return err
+	} else {
+		cache.CacheUser(user)
 	}
 
 	tx := &models.Transaction{

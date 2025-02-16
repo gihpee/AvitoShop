@@ -8,8 +8,8 @@ import (
 )
 
 type User struct {
-	ID        uuid.UUID `gorm:"type:uuid;primary_key;default:gen_random_uuid()" json:"id"`
-	Username  string    `gorm:"unique;not null" json:"username"`
+	ID        uuid.UUID `gorm:"type:uuid;primary_key;default:gen_random_uuid();index" json:"id"`
+	Username  string    `gorm:"unique;not null;index" json:"username"`
 	Password  string    `json:"-"`
 	Coins     int       `gorm:"not null;default:1000" json:"coins"`
 	CreatedAt time.Time `json:"created_at"`

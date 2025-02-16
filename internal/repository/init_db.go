@@ -3,6 +3,7 @@ package repository
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"avito-tech-internship/config"
 	"avito-tech-internship/internal/models"
@@ -18,6 +19,11 @@ func InitDB(cfg *config.Config) *gorm.DB {
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
+
+	sqlDB, _ := db.DB()
+	sqlDB.SetMaxOpenConns(50)
+	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
 	models.MigrateUsers(db)
 	models.MigrateTransactions(db)

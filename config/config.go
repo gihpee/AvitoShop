@@ -14,6 +14,8 @@ type Config struct {
 	DBPassword string
 	DBName     string
 	JWTSecret  string
+	RedisHost  string
+	RedisPort  string
 }
 
 func LoadConfig() *Config {
@@ -29,6 +31,8 @@ func LoadConfig() *Config {
 		DBPassword: getEnv("DB_PASSWORD", "rootroot"),
 		DBName:     getEnv("DB_NAME", "avito2"),
 		JWTSecret:  getEnv("JWT_SECRET", "rootroot"),
+		RedisHost:  getEnv("REDIS_HOST", "redis"),
+		RedisPort:  getEnv("REDIS_PORT", "6379"),
 	}
 }
 

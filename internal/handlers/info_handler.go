@@ -14,13 +14,13 @@ func RegisterInfoRoutes(r *gin.RouterGroup, userService *services.UserService, t
 
 		user, err := userService.GetUserByID(userID)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"errors": "User not found"})
+			c.JSON(http.StatusBadRequest, gin.H{"errors": "user not found"})
 			return
 		}
 
 		transactions, err := transService.GetUserTransactions(userID)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"errors": "Failed to fetch transactions"})
+			c.JSON(http.StatusInternalServerError, gin.H{"errors": "failed to fetch transactions"})
 			return
 		}
 

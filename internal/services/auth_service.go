@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 
+	"avito-tech-internship/internal/cache"
 	"avito-tech-internship/internal/models"
 	"avito-tech-internship/internal/repository"
 
@@ -31,9 +32,14 @@ func (s *AuthService) generateJWT(userID uuid.UUID) (string, error) {
 }
 
 func (s *AuthService) Authenticate(username, password string) (string, error) {
+	cachedToken, err := cache.GetCachedToken(username)
+	if err == nil {
+		return cachedToken, nil
+	}
+
 	user, err := s.userRepo.GetUserByUsername(username)
 	if err != nil {
-		hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+		hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), 6)
 		user = &models.User{
 			ID:       uuid.New(),
 			Username: username,
@@ -41,6 +47,7 @@ func (s *AuthService) Authenticate(username, password string) (string, error) {
 			Coins:    1000,
 		}
 		s.userRepo.CreateUser(user)
+		cache.CacheUser(user)
 	} else {
 		err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 		if err != nil {
@@ -48,7 +55,10 @@ func (s *AuthService) Authenticate(username, password string) (string, error) {
 		}
 	}
 
-	return s.generateJWT(user.ID)
+	token, _ := s.generateJWT(user.ID)
+	cache.CacheToken(username, token)
+
+	return token, nil
 }
 
 func (s *AuthService) ParseToken(tokenString string) (string, error) {
