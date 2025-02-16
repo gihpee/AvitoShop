@@ -1,1 +1,6 @@
 /reports
+
+.env.example
+.gitignore
+.gitattributes
+README.md
