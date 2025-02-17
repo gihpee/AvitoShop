@@ -1,1 +1,6 @@
+*.js linguist-generated=true
+*.html linguist-generated=true
+*.css linguist-generated=true
+*.json linguist-generated=true
+*.less linguist-generated=true
 reports/* linguist-generated=true
